@@ -1,69 +1,64 @@
 body{
 margin:0;
 font-family:-apple-system;
-overflow:hidden;
 color:white;
+overflow:hidden;
 }
 
-.background{
+.bg{
 position:fixed;
 width:100%;
 height:100%;
 background:
-radial-gradient(circle at 20% 30%,#3a7bd5,transparent),
-radial-gradient(circle at 80% 70%,#8e54e9,transparent),
-#0f0f18;
-animation:bgMove 12s infinite alternate;
+radial-gradient(circle at 30% 20%,#4facfe,transparent),
+radial-gradient(circle at 70% 80%,#00f2fe,transparent),
+#0a0a12;
+animation:move 15s infinite alternate;
 }
 
-@keyframes bgMove{
-0%{filter:hue-rotate(0deg);}
+@keyframes move{
 100%{filter:hue-rotate(40deg);}
 }
 
-.container{
+.screen{
 position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-text-align:center;
-width:90%;
+top:0;
+bottom:80px;
+width:100%;
+overflow:auto;
+padding:25px;
+animation:fade .4s;
 }
 
-h1{
-font-weight:500;
-opacity:0.9;
+@keyframes fade{
+from{opacity:0;transform:translateY(20px)}
 }
 
 .card{
-margin-top:40px;
-padding:40px;
-border-radius:30px;
-font-size:22px;
-background:rgba(255,255,255,0.1);
+background:rgba(255,255,255,.1);
 backdrop-filter:blur(30px);
-box-shadow:
-0 20px 60px rgba(0,0,0,0.5),
-inset 0 0 20px rgba(255,255,255,0.1);
-transition:0.5s;
+border-radius:25px;
+padding:25px;
+margin-top:20px;
+box-shadow:0 20px 60px rgba(0,0,0,.4);
+font-size:20px;
 }
 
-.card.show{
-transform:scale(1.05);
+.tabbar{
+position:fixed;
+bottom:0;
+width:100%;
+height:80px;
+display:flex;
+justify-content:space-around;
+align-items:center;
+background:rgba(20,20,30,.6);
+backdrop-filter:blur(30px);
 }
 
-.actions{
-margin-top:40px;
-}
-
-.actions button{
-margin:10px;
-width:60px;
-height:60px;
-border-radius:50%;
+.tabbar button{
+background:none;
 border:none;
-font-size:22px;
-background:rgba(255,255,255,0.15);
-backdrop-filter:blur(10px);
+font-size:26px;
 color:white;
 }
