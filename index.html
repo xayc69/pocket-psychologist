@@ -1,40 +1,29 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Карманный психолог</title>
-
-<link rel="stylesheet" href="style.css">
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-
+<link rel="stylesheet" href="./style.css">
 </head>
-
 <body>
 
 <div class="app">
+    <h1>🧠 Карманный психолог</h1>
 
-<h1>🧠 Карманный психолог</h1>
+    <div class="buttons">
+        <button data-cat="stress">Стресс</button>
+        <button data-cat="motivation">Мотивация</button>
+        <button data-cat="confidence">Уверенность</button>
+        <button data-cat="sleep">Сон</button>
+    </div>
 
-<div class="buttons">
-
-<button data-cat="stress">Стресс</button>
-<button data-cat="motivation">Мотивация</button>
-<button data-cat="confidence">Уверенность</button>
-<button data-cat="sleep">Сон</button>
-
+    <div id="content" class="content">
+        Выберите категорию
+    </div>
 </div>
 
-<div id="content" class="content">
-Выберите категорию
-</div>
-
-</div>
-
+<!-- Скрипт подключаем после всех элементов -->
 <script src="./app.js"></script>
-
 </body>
 </html>
-
