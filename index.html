@@ -2,7 +2,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
 
 <title>Карманный психолог</title>
 
@@ -13,22 +14,16 @@
 
 <body>
 
-<div class="background"></div>
+<div class="bg"></div>
 
-<div class="container">
+<div id="screen" class="screen"></div>
 
-<h1>Карманный психолог</h1>
-
-<div id="card" class="card">
-Нажми для совета
-</div>
-
-<div class="actions">
-<button onclick="newAdvice()">✨</button>
-<button onclick="saveAdvice()">⭐</button>
-<button onclick="shareAdvice()">📤</button>
-</div>
-
+<div class="tabbar">
+<button onclick="openScreen('home')">🏠</button>
+<button onclick="openScreen('day')">🧠</button>
+<button onclick="openScreen('fav')">❤️</button>
+<button onclick="openScreen('mood')">📊</button>
+<button onclick="openScreen('profile')">⚙️</button>
 </div>
 
 <script src="app.js"></script>
