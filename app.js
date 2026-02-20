@@ -1,88 +1,171 @@
-const tg=window.Telegram.WebApp;
+const tg = window.Telegram.WebApp;
 tg.expand();
 
-const advices=[
-"Ты уже достаточно хорош",
-"Отдых продуктивен",
-"Замедлись",
-"Ты не обязан всё контролировать",
-"Сегодня можно меньше",
-"Ошибки — рост",
-"Сделай вдох",
-"Ты справляешься"
+/* ------------------ СОВЕТЫ ------------------ */
+
+const advices = [
+"Ты уже достаточно хорош.",
+"Сделай глубокий вдох.",
+"Не всё требует немедленной реакции.",
+"Сегодня можно сделать меньше.",
+"Отдых — часть прогресса.",
+"Ты справлялся раньше.",
+"Замедлись.",
+"Тревога проходит.",
+"Ошибки — это опыт.",
+"Ты не обязан нравиться всем."
 ];
 
-// создаём 120 советов
-for(let i=0;i<20;i++){
+// увеличиваем базу советов
+for(let i=0;i<15;i++){
 advices.push(...advices);
 }
 
-let current="";
+let currentAdvice = "";
 
-function openScreen(name){
+/* ------------------ ЭКРАНЫ ------------------ */
 
-const s=document.getElementById("screen");
+function openScreen(screen){
 
-if(name==="home"){
-s.innerHTML=`
+const container =
+document.getElementById("screen");
+
+if(screen==="home"){
+container.innerHTML = `
 <h1>Карманный психолог</h1>
-<div class="card"
-onclick="newAdvice()">
-Нажми для совета
-</div>`;
+
+<div class="card" id="mainCard">
+Нажми чтобы получить совет
+</div>
+
+<div class="card" onclick="saveAdvice()">
+⭐ Сохранить совет
+</div>
+`;
+
+document
+.getElementById("mainCard")
+.onclick = newAdvice;
 }
 
-if(name==="day"){
+/* --- совет дня --- */
+if(screen==="day"){
 newAdvice();
 }
 
-if(name==="fav"){
-showFav();
+/* --- избранное --- */
+if(screen==="fav"){
+showFavorites();
 }
 
-if(name==="mood"){
-s.innerHTML=`
+/* --- настроение --- */
+if(screen==="mood"){
+container.innerHTML=`
 <h2>Как ты себя чувствуешь?</h2>
-<div class="card">😊 Хорошо</div>
-<div class="card">😐 Нормально</div>
-<div class="card">😔 Плохо</div>`;
+
+<div class="card" onclick="mood('good')">😊 Хорошо</div>
+<div class="card" onclick="mood('normal')">😐 Нормально</div>
+<div class="card" onclick="mood('bad')">😔 Плохо</div>
+`;
 }
 
-if(name==="profile"){
-s.innerHTML=`
+/* --- профиль --- */
+if(screen==="profile"){
+container.innerHTML=`
 <h2>Профиль</h2>
+
 <div class="card">
-Mini App PRO<br>
-Версия 2.0
-</div>`;
+Карманный психолог PRO<br>
+Telegram Mini App
+</div>
+`;
 }
+
 }
+
+/* ------------------ СОВЕТ ------------------ */
 
 function newAdvice(){
 
-current=
-advices[Math.floor(Math.random()*advices.length)];
+currentAdvice =
+advices[
+Math.floor(Math.random()*advices.length)
+];
 
-document.getElementById("screen")
-.innerHTML=
-<div class="card">${current}</div>;
+const container =
+document.getElementById("screen");
 
-tg.HapticFeedback.impactOccurred("medium");
+container.innerHTML = `
+<h2>Совет</h2>
+<div class="card">${currentAdvice}</div>
+<div class="card" onclick="saveAdvice()">
+⭐ В избранное
+</div>
+`;
+
+tg.HapticFeedback
+.impactOccurred("medium");
 }
 
-function showFav(){
+/* ------------------ ИЗБРАННОЕ ------------------ */
 
-let fav=
-JSON.parse(localStorage.getItem("fav"))||[];
+function saveAdvice(){
+
+if(!currentAdvice) return;
+
+let fav =
+JSON.parse(
+localStorage.getItem("favorites")
+) || [];
+
+fav.push(currentAdvice);
+
+localStorage.setItem(
+"favorites",
+JSON.stringify(fav)
+);
+
+tg.HapticFeedback
+.notificationOccurred("success");
+}
+
+function showFavorites(){
+
+let fav =
+JSON.parse(
+localStorage.getItem("favorites")
+) || [];
 
 let html="<h2>Избранное</h2>";
 
-fav.forEach(f=>{
-html+=`<div class="card">${f}</div>`;
+if(fav.length===0){
+html+=`<div class="card">
+Пока пусто
+</div>`;
+}
+
+fav.forEach(a=>{
+html+=`<div class="card">${a}</div>`;
 });
 
 document.getElementById("screen")
-.innerHTML=html;
+.innerHTML = html;
 }
+
+/* ------------------ НАСТРОЕНИЕ ------------------ */
+
+function mood(type){
+
+tg.HapticFeedback
+.impactOccurred("light");
+
+document.getElementById("screen")
+.innerHTML=`
+<div class="card">
+Настроение сохранено ✅
+</div>`;
+}
+
+/* ------------------ СТАРТ ------------------ */
 
 openScreen("home");
