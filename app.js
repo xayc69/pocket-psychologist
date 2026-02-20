@@ -1,171 +1,43 @@
 const tg = window.Telegram.WebApp;
+
 tg.expand();
 
-/* ------------------ СОВЕТЫ ------------------ */
+const advice = {
 
-const advices = [
-"Ты уже достаточно хорош.",
-"Сделай глубокий вдох.",
-"Не всё требует немедленной реакции.",
-"Сегодня можно сделать меньше.",
-"Отдых — часть прогресса.",
-"Ты справлялся раньше.",
-"Замедлись.",
-"Тревога проходит.",
-"Ошибки — это опыт.",
-"Ты не обязан нравиться всем."
-];
+stress: [
+"Сделай 5 глубоких вдохов",
+"Переключи внимание на тело",
+"Выйди на короткую прогулку"
+],
 
-// увеличиваем базу советов
-for(let i=0;i<15;i++){
-advices.push(...advices);
-}
+motivation: [
+"Начни с самого маленького шага",
+"Не жди вдохновения — действуй",
+"Дисциплина сильнее настроения"
+],
 
-let currentAdvice = "";
+confidence: [
+"Ты уже справлялся раньше",
+"Ошибки — это опыт",
+"Говори медленнее и увереннее"
+],
 
-/* ------------------ ЭКРАНЫ ------------------ */
+sleep: [
+"Не используй телефон перед сном",
+"Проветри комнату",
+"Ложись в одно время"
+]
 
-function openScreen(screen){
+};
 
-const container =
-document.getElementById("screen");
+function openCategory(category){
 
-if(screen==="home"){
-container.innerHTML = `
-<h1>Карманный психолог</h1>
+const list = advice[category];
 
-<div class="card" id="mainCard">
-Нажми чтобы получить совет
-</div>
+const random =
+list[Math.floor(Math.random()*list.length)];
 
-<div class="card" onclick="saveAdvice()">
-⭐ Сохранить совет
-</div>
-`;
-
-document
-.getElementById("mainCard")
-.onclick = newAdvice;
-}
-
-/* --- совет дня --- */
-if(screen==="day"){
-newAdvice();
-}
-
-/* --- избранное --- */
-if(screen==="fav"){
-showFavorites();
-}
-
-/* --- настроение --- */
-if(screen==="mood"){
-container.innerHTML=`
-<h2>Как ты себя чувствуешь?</h2>
-
-<div class="card" onclick="mood('good')">😊 Хорошо</div>
-<div class="card" onclick="mood('normal')">😐 Нормально</div>
-<div class="card" onclick="mood('bad')">😔 Плохо</div>
-`;
-}
-
-/* --- профиль --- */
-if(screen==="profile"){
-container.innerHTML=`
-<h2>Профиль</h2>
-
-<div class="card">
-Карманный психолог PRO<br>
-Telegram Mini App
-</div>
-`;
-}
+document.getElementById("content").innerHTML =
+<h2>Совет</h2><p>${random}</p>;
 
 }
-
-/* ------------------ СОВЕТ ------------------ */
-
-function newAdvice(){
-
-currentAdvice =
-advices[
-Math.floor(Math.random()*advices.length)
-];
-
-const container =
-document.getElementById("screen");
-
-container.innerHTML = `
-<h2>Совет</h2>
-<div class="card">${currentAdvice}</div>
-<div class="card" onclick="saveAdvice()">
-⭐ В избранное
-</div>
-`;
-
-tg.HapticFeedback
-.impactOccurred("medium");
-}
-
-/* ------------------ ИЗБРАННОЕ ------------------ */
-
-function saveAdvice(){
-
-if(!currentAdvice) return;
-
-let fav =
-JSON.parse(
-localStorage.getItem("favorites")
-) || [];
-
-fav.push(currentAdvice);
-
-localStorage.setItem(
-"favorites",
-JSON.stringify(fav)
-);
-
-tg.HapticFeedback
-.notificationOccurred("success");
-}
-
-function showFavorites(){
-
-let fav =
-JSON.parse(
-localStorage.getItem("favorites")
-) || [];
-
-let html="<h2>Избранное</h2>";
-
-if(fav.length===0){
-html+=`<div class="card">
-Пока пусто
-</div>`;
-}
-
-fav.forEach(a=>{
-html+=`<div class="card">${a}</div>`;
-});
-
-document.getElementById("screen")
-.innerHTML = html;
-}
-
-/* ------------------ НАСТРОЕНИЕ ------------------ */
-
-function mood(type){
-
-tg.HapticFeedback
-.impactOccurred("light");
-
-document.getElementById("screen")
-.innerHTML=`
-<div class="card">
-Настроение сохранено ✅
-</div>`;
-}
-
-/* ------------------ СТАРТ ------------------ */
-
-openScreen("home");
