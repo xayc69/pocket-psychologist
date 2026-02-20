@@ -1,58 +1,92 @@
-const advices = [
-"Ты не обязан нравиться всем.",
-"Отдых — это необходимость, а не слабость.",
-"Иногда лучший шаг — остановиться.",
-"Мысли — не факты.",
-"Ты уже справлялся раньше.",
-"Не сравнивай свою жизнь с чужой.",
-"Маленький прогресс — тоже прогресс.",
-"Разреши себе ошибаться.",
-"Тревога — это сигнал, а не враг.",
-"Сегодня достаточно сделать немного."
+const data = {
+stress:[
+"Сделай глубокий вдох.",
+"Ты переживал и хуже.",
+"Остановись на минуту."
+],
+motivation:[
+"Начни с малого.",
+"Сегодня лучший день начать.",
+"Ты ближе чем думаешь."
+],
+calm:[
+"Замедлись.",
+"Тишина лечит.",
+"Позволь себе отдых."
+]
+};
+
+let category="all";
+let current="";
+
+function setCategory(cat){
+category=cat;
+newAdvice();
+}
+
+function newAdvice(){
+
+let list=[];
+
+if(category==="all"){
+list=[
+...data.stress,
+...data.motivation,
+...data.calm
 ];
-
-let currentAdvice = "";
-
-function randomAdvice() {
-    currentAdvice =
-    advices[Math.floor(Math.random() * advices.length)];
-
-    document.getElementById("advice").innerText =
-    currentAdvice;
+}else{
+list=data[category];
 }
 
-function saveAdvice() {
+current=list[Math.floor(Math.random()*list.length)];
 
-    if (!currentAdvice) return;
+const card=document.getElementById("card");
 
-    let favorites =
-    JSON.parse(localStorage.getItem("favorites")) || [];
+card.classList.remove("animate");
 
-    favorites.push(currentAdvice);
-
-    localStorage.setItem(
-        "favorites",
-        JSON.stringify(favorites)
-    );
-
-    showFavorites();
+setTimeout(()=>{
+card.innerText=current;
+card.classList.add("animate");
+},100);
 }
 
-function showFavorites() {
+function saveAdvice(){
 
-    let favorites =
-    JSON.parse(localStorage.getItem("favorites")) || [];
+if(!current) return;
 
-    let list =
-    document.getElementById("favorites");
+let fav=
+JSON.parse(localStorage.getItem("fav"))||[];
 
-    list.innerHTML = "";
+fav.push(current);
 
-    favorites.forEach(advice => {
-        let li = document.createElement("li");
-        li.innerText = advice;
-        list.appendChild(li);
-    });
+localStorage.setItem("fav",
+JSON.stringify(fav));
+
+showFav();
 }
 
-showFavorites();
+function showFav(){
+
+let fav=
+JSON.parse(localStorage.getItem("fav"))||[];
+
+let ul=document.getElementById("favorites");
+
+ul.innerHTML="";
+
+fav.forEach(t=>{
+let li=document.createElement("li");
+li.innerText=t;
+ul.appendChild(li);
+});
+}
+
+function shareAdvice(){
+
+if(!current) return;
+
+Telegram.WebApp.sendData(current);
+alert("Совет можно отправить!");
+}
+
+showFav();
