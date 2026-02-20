@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Карманный психолог</title>
 
@@ -14,16 +13,21 @@ content="width=device-width,initial-scale=1">
 
 <body>
 
-<div class="bg"></div>
+<div class="app">
 
-<div id="screen" class="screen"></div>
+<h1>🧠 Карманный психолог</h1>
 
-<div class="tabbar">
-<button onclick="openScreen('home')">🏠</button>
-<button onclick="openScreen('day')">🧠</button>
-<button onclick="openScreen('fav')">❤️</button>
-<button onclick="openScreen('mood')">📊</button>
-<button onclick="openScreen('profile')">⚙️</button>
+<div class="buttons">
+<button onclick="openCategory('stress')">Стресс</button>
+<button onclick="openCategory('motivation')">Мотивация</button>
+<button onclick="openCategory('confidence')">Уверенность</button>
+<button onclick="openCategory('sleep')">Сон</button>
+</div>
+
+<div id="content" class="content">
+Выберите категорию
+</div>
+
 </div>
 
 <script src="app.js"></script>
