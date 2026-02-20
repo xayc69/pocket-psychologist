@@ -1,3 +1,4 @@
+alert("JS стартовал");
 const tg = window.Telegram.WebApp;
 
 tg.ready();
@@ -60,3 +61,4 @@ showAdvice(cat);
 });
 
 });
+
