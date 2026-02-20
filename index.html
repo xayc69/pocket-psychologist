@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Карманный психолог PRO</title>
+<title>Карманный психолог</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -13,29 +13,21 @@
 
 <body>
 
-<div class="app">
+<div class="background"></div>
 
-<h1>🧠 Карманный психолог</h1>
+<div class="container">
 
-<div class="tabs">
-<button onclick="setCategory('all')">Все</button>
-<button onclick="setCategory('stress')">Стресс</button>
-<button onclick="setCategory('motivation')">Мотивация</button>
-<button onclick="setCategory('calm')">Спокойствие</button>
-</div>
+<h1>Карманный психолог</h1>
 
 <div id="card" class="card">
-Нажми «Новый совет»
+Нажми для совета
 </div>
 
-<div class="buttons">
-<button onclick="newAdvice()">✨ Новый</button>
+<div class="actions">
+<button onclick="newAdvice()">✨</button>
 <button onclick="saveAdvice()">⭐</button>
 <button onclick="shareAdvice()">📤</button>
 </div>
-
-<h2>⭐ Избранное</h2>
-<ul id="favorites"></ul>
 
 </div>
 
